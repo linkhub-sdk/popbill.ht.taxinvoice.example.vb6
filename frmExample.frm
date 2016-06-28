@@ -65,18 +65,18 @@ Begin VB.Form frmExample
          Width           =   3975
          Begin VB.CommandButton btnGetXML 
             Caption         =   "상세정보 조회 - XML"
-            Height          =   375
+            Height          =   410
             Left            =   1800
             TabIndex        =   39
-            Top             =   720
+            Top             =   1200
             Width           =   1935
          End
          Begin VB.CommandButton btnGetTaxinvoice 
             Caption         =   "상세정보 조회"
-            Height          =   375
+            Height          =   410
             Left            =   240
             TabIndex        =   38
-            Top             =   720
+            Top             =   1200
             Width           =   1455
          End
          Begin VB.TextBox txtNtsconfirmNum 
@@ -85,6 +85,14 @@ Begin VB.Form frmExample
             TabIndex        =   37
             Top             =   300
             Width           =   2295
+         End
+         Begin VB.Label Label6 
+            Caption         =   "('수집결과 조회'시 반환된 전자(세금)계산서 국세청승인번호를 입력하시기 바랍니다.)"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   45
+            Top             =   720
+            Width           =   3735
          End
          Begin VB.Label Label5 
             Caption         =   "국세청승인번호 : "
@@ -186,7 +194,7 @@ Begin VB.Form frmExample
       Height          =   315
       Left            =   2400
       TabIndex        =   0
-      Text            =   "4108600477"
+      Text            =   "1234567890"
       Top             =   255
       Width           =   1935
    End
@@ -194,7 +202,7 @@ Begin VB.Form frmExample
       Height          =   315
       Left            =   6120
       TabIndex        =   1
-      Text            =   "innoposttest"
+      Text            =   "testkorea"
       Top             =   240
       Width           =   1935
    End
@@ -375,7 +383,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 '링크아이디
-Private Const LinkID = "TESTER"
+Private Const linkID = "TESTER"
 '비밀키. 유출에 주의하시기 바랍니다.
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
@@ -397,7 +405,7 @@ End Sub
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, LinkID)
+    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, linkID)
     
     If Response Is Nothing Then
         MsgBox ("[" + CStr(htTaxinvoiceService.LastErrCode) + "] " + htTaxinvoiceService.LastErrMessage)
@@ -687,7 +695,7 @@ Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
     Dim Response As PBResponse
     
-    joinData.LinkID = LinkID '링크 아이디
+    joinData.linkID = linkID '링크 아이디
     joinData.CorpNum = "1231212312" '사업자번호 "-" 제외.
     joinData.ceoname = "대표자성명"
     joinData.corpName = "회원상호"
@@ -1083,7 +1091,7 @@ End Sub
 
 Private Sub Form_Load()
     '모듈 초기화
-    htTaxinvoiceService.Initialize LinkID, SecretKey
+    htTaxinvoiceService.Initialize linkID, SecretKey
     
     '연동환경 설정값 True(테스트용), False(상업용)
     htTaxinvoiceService.IsTest = True
