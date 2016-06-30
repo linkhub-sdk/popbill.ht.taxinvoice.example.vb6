@@ -879,7 +879,7 @@ Private Sub btnSearch_Click()
     Dim taxType As New Collection
     Dim purposeType As New Collection
     Dim taxRegIDType As String
-    Dim taxRegID As New Collection
+    Dim taxRegID As String
     Dim taxRegIDYN As String
     Dim page As Integer
     Dim perPage As Integer
@@ -905,8 +905,8 @@ Private Sub btnSearch_Click()
     '종사업장번호 사업자 유형, S-공급자, B-공급받는자, T-수탁자
     taxRegIDType = "S"
     
-    '종사업장번호 배열
-    taxRegID.Add ""
+    '종사업장번호 콤마(,)로 구분하여 구성 ex) 0001,0002
+    taxRegID = ""
     
     '종사업장 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 조회
     taxRegIDYN = ""
@@ -976,7 +976,7 @@ Private Sub btnSummary_Click()
     Dim taxType As New Collection
     Dim purposeType As New Collection
     Dim taxRegIDType As String
-    Dim taxRegID As New Collection
+    Dim taxRegID As String
     Dim taxRegIDYN As String
     Dim tmp As String
     
@@ -998,13 +998,12 @@ Private Sub btnSummary_Click()
     '종사업장번호 사업자 유형, S-공급자, B-공급받는자, T-수탁자
     taxRegIDType = "S"
     
-    '종사업장번호 배열
-    taxRegID.Add ""
+    '종사업장번호, 콤마(,)로 구분하여 구성 ex) 0001,0002
+    taxRegID = ""
     
     '종사업장 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 조회
     taxRegIDYN = ""
-    
-   
+      
         
         
     'Summary 호출
