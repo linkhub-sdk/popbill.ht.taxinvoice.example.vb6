@@ -501,6 +501,7 @@ Private Sub btnGetCertificatePopUpURL_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
 End Sub
 
@@ -510,6 +511,7 @@ End Sub
 
 Private Sub btnGetChargeInfo_Click()
     Dim ChargeInfo As PBChargeInfo
+    Dim tmp As String
     
     Set ChargeInfo = htTaxinvoiceService.GetChargeInfo(txtCorpNum.Text)
      
@@ -517,8 +519,6 @@ Private Sub btnGetChargeInfo_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "unitCost ([정액제]월정액요금) : " + ChargeInfo.unitCost + vbCrLf
     tmp = tmp + "chargeMethod (과금유형) : " + ChargeInfo.chargeMethod + vbCrLf
@@ -533,6 +533,7 @@ End Sub
 
 Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
+    Dim tmp As String
     
     Set CorpInfo = htTaxinvoiceService.GetCorpInfo(txtCorpNum.Text, txtUserID.Text)
      
@@ -540,8 +541,6 @@ Private Sub btnGetCorpInfo_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "ceoname(대표자성명) : " + CorpInfo.ceoname + vbCrLf
     tmp = tmp + "corpName(상호명) : " + CorpInfo.corpName + vbCrLf
@@ -566,6 +565,7 @@ Private Sub btnGetFlatRatePopUPURL_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
     
 End Sub
@@ -576,6 +576,7 @@ End Sub
 
 Private Sub btnGetFlatRateState_Click()
     Dim flatRateInfo As PBHTTaxinvoiceFlatRate
+    Dim tmp As String
     
     Set flatRateInfo = htTaxinvoiceService.GetFlatRateState(txtCorpNum.Text)
      
@@ -583,8 +584,6 @@ Private Sub btnGetFlatRateState_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "referencdeID (사업자번호) : " + flatRateInfo.referenceID + vbCrLf
     tmp = tmp + "contractDT (정액제 서비스 시작일시) : " + flatRateInfo.contractDT + vbCrLf
@@ -607,6 +606,7 @@ End Sub
 
 Private Sub btnGetJobState_Click()
     Dim jobInfo As PBHTTaxinvoiceJobState
+    Dim tmp As String
     
     Set jobInfo = htTaxinvoiceService.GetJobState(txtCorpNum.Text, txtJobID.Text)
      
@@ -614,8 +614,6 @@ Private Sub btnGetJobState_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "jobID(작업아이디) : " + jobInfo.jobID + vbCrLf
     tmp = tmp + "jobState(수집상태) : " + CStr(jobInfo.jobState) + vbCrLf
@@ -666,7 +664,9 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
+    
 End Sub
 
 '=========================================================================
@@ -679,6 +679,7 @@ Private Sub btnGetTaxinvoice_Click()
     Dim taxinvoiceInfo As PBHTTaxinvoice
     Dim i As Integer
     Dim tmp As String
+    Dim detailInfo As PBHTTaxinvoiceDetail
     
     Set taxinvoiceInfo = htTaxinvoiceService.GetTaxinvoice(txtCorpNum.Text, txtNtsconfirmNum.Text)
      
@@ -740,7 +741,7 @@ Private Sub btnGetTaxinvoice_Click()
         
         
     tmp = tmp + "========전자(세금)계산서 품목배열========" + vbCrLf
-    Dim detailInfo As PBHTTaxinvoiceDetail
+    
     
     For Each detailInfo In taxinvoiceInfo.detailList
         tmp = tmp + "serialNum : " + CStr(detailInfo.serialNum) + vbCrLf
@@ -767,6 +768,7 @@ End Sub
 Private Sub btnGetXML_Click()
     Dim taxinvoiceXML As PBHTTaxinvoiceXML
     Dim i As Integer
+    Dim tmp As String
     
     Set taxinvoiceXML = htTaxinvoiceService.GetXML(txtCorpNum.Text, txtNtsconfirmNum.Text)
      
@@ -774,8 +776,6 @@ Private Sub btnGetXML_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "ResultCode (응답코드) : " + CStr(taxinvoiceXML.ResultCode) + vbCrLf
     tmp = tmp + "Message (국세청승인번호) : " + taxinvoiceXML.Message + vbCrLf
@@ -853,7 +853,9 @@ End Sub
 
 Private Sub btnListActiveJob_Click()
     Dim jobList As Collection
-        
+    Dim tmp As String
+    Dim info As PBHTTaxinvoiceJobState
+    
     Set jobList = htTaxinvoiceService.ListActiveJob(txtCorpNum.Text)
      
     If jobList Is Nothing Then
@@ -861,12 +863,8 @@ Private Sub btnListActiveJob_Click()
         Exit Sub
     End If
     
-    Dim tmp As String
-    
     tmp = tmp + "작업아이디(jobID)의 유효시간은 1시간입니다" + vbCrLf + vbCrLf
     tmp = tmp + "jobID | jobState | queryType | queryDateType | queryStDate | queryEnDate | errorCode | errorReason | jobStartDT | jobEndDT | collectCount | regDT " + vbCrLf
-    
-    Dim info As PBHTTaxinvoiceJobState
     
     For Each info In jobList
         tmp = tmp + CStr(info.jobID) + " | "
@@ -898,7 +896,9 @@ End Sub
 
 Private Sub btnListContact_Click()
     Dim resultList As Collection
-        
+    Dim tmp As String
+    Dim info As PBContactInfo
+    
     Set resultList = htTaxinvoiceService.ListContact(txtCorpNum.Text, txtUserID.Text)
      
     If resultList Is Nothing Then
@@ -906,11 +906,8 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    Dim tmp As String
     
     tmp = "id | email | hp | personName | searchAllAllowYN | tel | fax | mgrYN | regDT " + vbCrLf
-    
-    Dim info As PBContactInfo
     
     For Each info In resultList
         tmp = tmp + info.id + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
@@ -934,7 +931,9 @@ Private Sub btnPopbillURL_CHRG_Click()
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
+    
 End Sub
 
 '=========================================================================
@@ -1040,6 +1039,7 @@ Private Sub btnSearch_Click()
     Dim order As String
     Dim tmp As String
     Dim listboxRow As String
+    Dim tiInfo As PBHTTaxinvoiceAbbr
     
     '문서형태 배열, N-일반, M-수정
     tiType.Add "N"
@@ -1092,8 +1092,6 @@ Private Sub btnSearch_Click()
     taxinvoiceInfo.Clear
     
     taxinvoiceInfo.AddItem "작성일자 | 발행일자 | 전송일자 | 거래처 | 등록번호 | 과세형태 | 공급가액 | 문서형태 | 국세청승인번호", 0
-    
-    Dim tiInfo As PBHTTaxinvoiceAbbr
            
     For Each tiInfo In SearchList.list
         ' 추가적인 전자(세금)계산서 항목은 [홈택스 전자(세금)계산서 연계 API 연동매뉴얼 > 4.1.응답구성전문] 을 참조하시기 바랍니다.'
