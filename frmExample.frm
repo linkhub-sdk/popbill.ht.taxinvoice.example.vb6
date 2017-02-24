@@ -385,9 +385,9 @@ Attribute VB_Exposed = False
 ' 팝빌 홈택스 전자세금계산서 연계 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 :
-' - 업데이트 일자 : 2016-10-12
-' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991 (직통 / 정요한대리)
-' - 연동 기술지원 이메일 : dev@linkhub.co.kr
+' - 업데이트 일자 : 2017-02-23
+' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
+' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
 ' <테스트 연동개발 준비사항>
 ' 1) 29, 32번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
@@ -494,7 +494,7 @@ End Sub
 Private Sub btnGetCertificatePopUpURL_Click()
     Dim url As String
     
-    url = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text, txtUserID.Text)
+    url = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -534,7 +534,7 @@ Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
     Dim tmp As String
     
-    Set CorpInfo = htTaxinvoiceService.GetCorpInfo(txtCorpNum.Text, txtUserID.Text)
+    Set CorpInfo = htTaxinvoiceService.GetCorpInfo(txtCorpNum.Text)
      
     If CorpInfo Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -558,7 +558,7 @@ End Sub
 Private Sub btnGetFlatRatePopUPURL_Click()
     Dim url As String
     
-    url = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text, txtUserID.Text)
+    url = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -898,7 +898,7 @@ Private Sub btnListContact_Click()
     Dim tmp As String
     Dim info As PBContactInfo
     
-    Set resultList = htTaxinvoiceService.ListContact(txtCorpNum.Text, txtUserID.Text)
+    Set resultList = htTaxinvoiceService.ListContact(txtCorpNum.Text)
      
     If resultList Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -970,7 +970,7 @@ Private Sub btnRegistContact_Click()
     '관리자 권한여부
     joinData.mgrYN = False
         
-    Set Response = htTaxinvoiceService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
+    Set Response = htTaxinvoiceService.RegistContact(txtCorpNum.Text, joinData)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1236,7 +1236,7 @@ Private Sub btnUpdateCorpInfo_Click()
     '종목
     CorpInfo.bizClass = "종목"
     
-    Set Response = htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo, txtUserID.Text)
+    Set Response = htTaxinvoiceService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
