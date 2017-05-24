@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmExample 
-   Caption         =   "팝빌 홈택스 전자(세금)계산서 연계 API SDK"
+   Caption         =   "팝빌 홈택스 전자(세금)계산서 매입매출 API SDK"
    ClientHeight    =   11295
    ClientLeft      =   60
    ClientTop       =   450
