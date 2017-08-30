@@ -1132,12 +1132,13 @@ Private Sub btnSearch_Click()
     
     taxinvoiceInfo.Clear
     
-    taxinvoiceInfo.AddItem "작성일자 | 발행일자 | 전송일자 | 거래처 | 등록번호 | 과세형태 | 공급가액 | 문서형태 | 국세청승인번호", 0
+    taxinvoiceInfo.AddItem "구분 | 작성일자 | 발행일자 | 전송일자 | 거래처 | 등록번호 | 과세형태 | 공급가액 | 문서형태 | 국세청승인번호", 0
            
     For Each tiInfo In SearchList.list
         ' 추가적인 전자(세금)계산서 항목은 [홈택스 전자(세금)계산서 연계 API 연동매뉴얼 > 4.1.응답구성전문] 을 참조하시기 바랍니다.'
         listboxRow = ""
-        listboxRow = tiInfo.writeDate + " | "
+        listboxRow = tiInfo.invoiceType + " | "
+        listboxRow = listboxRow + tiInfo.writeDate + " | "
         listboxRow = listboxRow + tiInfo.issueDate + " | "
         listboxRow = listboxRow + tiInfo.sendDate + " | "
         listboxRow = listboxRow + tiInfo.invoiceeCorpName + " | "
