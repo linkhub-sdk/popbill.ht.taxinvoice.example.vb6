@@ -15,7 +15,7 @@ Begin VB.Form frmExample
       Left            =   240
       TabIndex        =   20
       Top             =   3480
-      Width           =   11775
+      Width           =   16575
       Begin VB.Frame Frame10 
          Caption         =   "부가기능"
          Height          =   2415
@@ -58,11 +58,19 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame9 
          Caption         =   "전자(세금)계산서 상세정보 조회"
-         Height          =   1935
+         Height          =   2415
          Left            =   4800
          TabIndex        =   32
          Top             =   360
          Width           =   3975
+         Begin VB.CommandButton btnGetPopUpURL 
+            Caption         =   "세금계산서 보기 팝업"
+            Height          =   375
+            Left            =   1800
+            TabIndex        =   49
+            Top             =   1800
+            Width           =   1935
+         End
          Begin VB.CommandButton btnGetXML 
             Caption         =   "상세정보 조회 - XML"
             Height          =   410
@@ -107,12 +115,12 @@ Begin VB.Form frmExample
          Height          =   4020
          Left            =   240
          TabIndex        =   30
-         Top             =   3000
+         Top             =   3360
          Width           =   11295
       End
       Begin VB.Frame Frame8 
          Caption         =   "매출/매입 수집결과 조회"
-         Height          =   1935
+         Height          =   2415
          Left            =   2280
          TabIndex        =   26
          Top             =   360
@@ -138,12 +146,12 @@ Begin VB.Form frmExample
          Height          =   300
          Left            =   2000
          TabIndex        =   25
-         Top             =   2560
+         Top             =   2925
          Width           =   2175
       End
       Begin VB.Frame Frame7 
          Caption         =   "매출/매입 내역 수집"
-         Height          =   1900
+         Height          =   2385
          Left            =   120
          TabIndex        =   21
          Top             =   360
@@ -176,9 +184,9 @@ Begin VB.Form frmExample
       Begin VB.Label Label4 
          Caption         =   "(작업아이디는 '수집 요청' 호출시 생성됩니다 )"
          Height          =   255
-         Left            =   4300
+         Left            =   4305
          TabIndex        =   31
-         Top             =   2620
+         Top             =   2985
          Width           =   4095
       End
       Begin VB.Label Label3 
@@ -186,7 +194,7 @@ Begin VB.Form frmExample
          Height          =   255
          Left            =   240
          TabIndex        =   24
-         Top             =   2640
+         Top             =   3000
          Width           =   1695
       End
    End
@@ -409,7 +417,7 @@ Attribute VB_Exposed = False
 ' 팝빌 홈택스 전자세금계산서 매입매출 조회 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/569/
-' - 업데이트 일자 : 2017-05-24
+' - 업데이트 일자 : 2018-10-04
 ' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -708,6 +716,27 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
     
     MsgBox "URL : " + vbCrLf + url
     
+End Sub
+
+Private Sub btnGetPopUpURL_Click()
+'=========================================================================
+' 홈택스 전자세금계산서 팝업 URL을 반환합니다.
+' - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+'=========================================================================
+
+
+    Dim url As String
+    
+    url = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
+    
+    If url = "" Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "URL : " + vbCrLf + url
+    
+
 End Sub
 
 '=========================================================================
