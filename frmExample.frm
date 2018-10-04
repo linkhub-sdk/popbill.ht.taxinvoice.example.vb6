@@ -16,6 +16,70 @@ Begin VB.Form frmExample
       TabIndex        =   20
       Top             =   3480
       Width           =   16575
+      Begin VB.Frame Frame13 
+         Caption         =   "홈택스 인증관련 기능"
+         Height          =   3855
+         Left            =   11760
+         TabIndex        =   48
+         Top             =   360
+         Width           =   2655
+         Begin VB.CommandButton btnDeleteDeptUser 
+            Caption         =   "부서사용자 등록정보 삭제"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   55
+            Top             =   3240
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnCheckLoginDeptUser 
+            Caption         =   "부서사용자 로그인 테스트"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   54
+            Top             =   2760
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnCheckDeptUser 
+            Caption         =   "부서사용자 등록정보 확인"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   53
+            Top             =   2280
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnRegistDeptUser 
+            Caption         =   "부서사용자 계정등록"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   52
+            Top             =   1800
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnCheckCertValidation 
+            Caption         =   "공인인증서 로그인 테스트"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   51
+            Top             =   1320
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnGetCertificateExpireDate 
+            Caption         =   "공인인증서 만료일자 확인"
+            Height          =   410
+            Left            =   120
+            TabIndex        =   50
+            Top             =   800
+            Width           =   2295
+         End
+         Begin VB.CommandButton btnGetCertificatePopUpURL 
+            Caption         =   "홈택스연동 인증관리 URL"
+            Height          =   410
+            Left            =   120
+            TabIndex        =   49
+            Top             =   300
+            Width           =   2295
+         End
+      End
       Begin VB.Frame Frame10 
          Caption         =   "부가기능"
          Height          =   2415
@@ -23,19 +87,11 @@ Begin VB.Form frmExample
          TabIndex        =   37
          Top             =   360
          Width           =   2600
-         Begin VB.CommandButton btnGetCertificatePopUpURL 
-            Caption         =   "홈택스연동 인증관리 URL"
-            Height          =   410
-            Left            =   120
-            TabIndex        =   41
-            Top             =   1280
-            Width           =   2295
-         End
          Begin VB.CommandButton btnGetFlatRateState 
             Caption         =   "정액제 서비스 상태 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   40
+            TabIndex        =   39
             Top             =   800
             Width           =   2295
          End
@@ -43,16 +99,8 @@ Begin VB.Form frmExample
             Caption         =   "정액제 서비스 신청 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   39
-            Top             =   300
-            Width           =   2295
-         End
-         Begin VB.CommandButton btnGetCertificateExpireDate 
-            Caption         =   "공인인증서 만료일자 확인"
-            Height          =   410
-            Left            =   120
             TabIndex        =   38
-            Top             =   1760
+            Top             =   300
             Width           =   2295
          End
       End
@@ -67,7 +115,7 @@ Begin VB.Form frmExample
             Caption         =   "세금계산서 보기 팝업"
             Height          =   375
             Left            =   1800
-            TabIndex        =   49
+            TabIndex        =   47
             Top             =   1800
             Width           =   1935
          End
@@ -98,7 +146,7 @@ Begin VB.Form frmExample
             Caption         =   "('수집결과 조회'시 반환된 전자(세금)계산서 국세청승인번호를 입력하시기 바랍니다.)"
             Height          =   375
             Left            =   120
-            TabIndex        =   42
+            TabIndex        =   40
             Top             =   720
             Width           =   3735
          End
@@ -273,14 +321,14 @@ Begin VB.Form frmExample
          Caption         =   "파트너과금 포인트"
          Height          =   1935
          Left            =   6600
-         TabIndex        =   44
+         TabIndex        =   42
          Top             =   360
          Width           =   2535
          Begin VB.CommandButton btnGetPartnerURL_CHRG 
             Caption         =   "포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   48
+            TabIndex        =   46
             Top             =   840
             Width           =   2295
          End
@@ -288,7 +336,7 @@ Begin VB.Form frmExample
             Caption         =   "파트너 잔여포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   46
+            TabIndex        =   44
             Top             =   360
             Width           =   2295
          End
@@ -297,14 +345,14 @@ Begin VB.Form frmExample
          Caption         =   "연동과금 포인트"
          Height          =   1935
          Left            =   4200
-         TabIndex        =   43
+         TabIndex        =   41
          Top             =   360
          Width           =   2295
          Begin VB.CommandButton btnPopbillURL_CHRG 
             Caption         =   " 포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   47
+            TabIndex        =   45
             Top             =   840
             Width           =   2055
          End
@@ -312,7 +360,7 @@ Begin VB.Form frmExample
             Caption         =   "잔여포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   43
             Top             =   360
             Width           =   2055
          End
@@ -448,6 +496,41 @@ Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 Private htTaxinvoiceService As New PBHTTaxinvoiceService
 
 '=========================================================================
+' 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트한다.
+'=========================================================================
+
+Private Sub btnCheckCertValidation_Click()
+    Dim Response As PBResponse
+    
+    Set Response = htTaxinvoiceService.CheckCertValidation(txtCorpNum.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
+End Sub
+
+
+'=========================================================================
+' 팝빌에 등록된 전자세금계산서 부서사용자 아이디를 확인합니다.
+'=========================================================================
+
+Private Sub btnCheckDeptUser_Click()
+    Dim Response As PBResponse
+    
+    Set Response = htTaxinvoiceService.CheckDeptUser(txtCorpNum.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
+End Sub
+
+'=========================================================================
 ' 팝빌 회원아이디 중복여부를 확인합니다.
 '=========================================================================
 
@@ -473,6 +556,42 @@ Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
     Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, LinkID)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
+End Sub
+
+
+'=========================================================================
+' 팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+'=========================================================================
+
+Private Sub btnCheckLoginDeptUser_Click()
+    Dim Response As PBResponse
+    
+    Set Response = htTaxinvoiceService.CheckLoginDeptUser(txtCorpNum.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
+End Sub
+
+
+'=========================================================================
+'  팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 삭제합니다.
+'=========================================================================
+
+Private Sub btnDeleteDeptUser_Click()
+    Dim Response As PBResponse
+    
+    Set Response = htTaxinvoiceService.DeleteDeptUser(txtCorpNum.Text)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1042,6 +1161,32 @@ Private Sub btnRegistContact_Click()
     joinData.mgrYN = False
         
     Set Response = htTaxinvoiceService.RegistContact(txtCorpNum.Text, joinData)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
+End Sub
+
+
+'=========================================================================
+' 홈택스 전자세금계산서 부서사용자 계정을 등록합니다.
+'=========================================================================
+
+Private Sub btnRegistDeptUser_Click()
+    Dim Response As PBResponse
+    Dim DeptUserID As String
+    Dim DeptUserPWD As String
+    
+    '홈택스에서 생성한 전자세금계산서 부서사용자 아이디
+    DeptUserID = "userid_test"
+    
+    '홈택스에서 생성한 전자세금계산서 부서사용자 비밀번호
+    DeptUserPWD = "passwd_test"
+    
+    Set Response = htTaxinvoiceService.RegistDeptUser(txtCorpNum.Text, DeptUserID, DeptUserPWD)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
