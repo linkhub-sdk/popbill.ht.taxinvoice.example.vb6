@@ -348,7 +348,7 @@ Begin VB.Form frmExample
          TabIndex        =   41
          Top             =   360
          Width           =   2295
-         Begin VB.CommandButton btnPopbillURL_CHRG 
+         Begin VB.CommandButton btnGetChargeURL 
             Caption         =   " 포인트 충전 URL"
             Height          =   410
             Left            =   120
@@ -372,7 +372,7 @@ Begin VB.Form frmExample
          TabIndex        =   17
          Top             =   360
          Width           =   2295
-         Begin VB.CommandButton btnGetPopbillURL_LOGIN 
+         Begin VB.CommandButton btnGetAccessURL 
             Caption         =   " 팝빌 로그인 URL"
             Height          =   410
             Left            =   120
@@ -601,6 +601,8 @@ Private Sub btnDeleteDeptUser_Click()
     MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
 End Sub
 
+
+
 '=========================================================================
 ' 연동회원의 잔여포인트를 확인합니다.
 ' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)
@@ -676,6 +678,10 @@ Private Sub btnGetChargeInfo_Click()
     
     MsgBox tmp
 End Sub
+
+
+
+
 
 '=========================================================================
 ' 연동회원의 회사정보를 확인합니다.
@@ -822,11 +828,10 @@ End Sub
 ' 팝빌(www.popbill.com)에 로그인된 팝빌 URL을 반환합니다.
 ' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 '=========================================================================
-
-Private Sub btnGetPopbillURL_LOGIN_Click()
+Private Sub btnGetAccessURL_Click()
     Dim url As String
     
-    url = htTaxinvoiceService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "LOGIN")
+    url = htTaxinvoiceService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -837,13 +842,12 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
     
 End Sub
 
-Private Sub btnGetPopUpURL_Click()
 '=========================================================================
 ' 홈택스 전자세금계산서 팝업 URL을 반환합니다.
 ' - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
 '=========================================================================
 
-
+Private Sub btnGetPopUpURL_Click()
     Dim url As String
     
     url = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
@@ -1110,11 +1114,10 @@ End Sub
 ' 연동회원 포인트 충전 URL을 반환합니다.
 ' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 '=========================================================================
-
-Private Sub btnPopbillURL_CHRG_Click()
+Private Sub btnGetChargeURL_Click()
     Dim url As String
     
-    url = htTaxinvoiceService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "CHRG")
+    url = htTaxinvoiceService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
