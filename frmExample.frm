@@ -250,7 +250,7 @@ Begin VB.Form frmExample
       Height          =   315
       Left            =   2400
       TabIndex        =   0
-      Text            =   "6798700433"
+      Text            =   "1234567890"
       Top             =   255
       Width           =   1935
    End
@@ -258,7 +258,7 @@ Begin VB.Form frmExample
       Height          =   315
       Left            =   6120
       TabIndex        =   1
-      Text            =   "testkorea_linkhub"
+      Text            =   "testkorea"
       Top             =   240
       Width           =   1935
    End
