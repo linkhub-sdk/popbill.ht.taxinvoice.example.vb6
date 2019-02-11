@@ -1,4 +1,4 @@
-frmExample = 191, 127, 1444, 745, , 24, 8, 1374, 881, C
+frmExample = 6, 68, 1507, 686, , 248, 36, 1598, 909, C
 cStringBuilder = 0, 0, 1253, 617, C
 Linkhub = 0, 0, 0, 0, C
 LinkhubToken = 31, 231, 1394, 747, C
@@ -6,7 +6,7 @@ PBContactInfo = 109, 271, 1472, 787, C
 PBCorpInfo = 0, 0, 1253, 618, C
 PBJoinForm = 220, 290, 1473, 907, C
 PBResponse = 198, 261, 1451, 878, C
-PBHTTaxinvoiceService = 251, 59, 1504, 837, 
+PBHTTaxinvoiceService = 179, 8, 1439, 786, 
 PBChargeInfo = 22, 29, 1275, 647, C
 PBHTTaxinvoiceJobState = 153, 117, 1406, 735, C
 PBHTTaxinvoiceSearch = 220, 290, 1473, 908, C
