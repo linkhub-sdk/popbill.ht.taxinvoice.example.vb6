@@ -1176,63 +1176,63 @@ Private Sub btnGetTaxinvoice_Click()
     End If
     
     tmp = "========전자(세금)계산서 정보=======" + vbCrLf
-    tmp = tmp + "writeDate(작성일자) : " + taxinvoiceInfo.writeDate + vbCrLf
-    tmp = tmp + "issueDT(발행일시) : " + taxinvoiceInfo.issueDT + vbCrLf
-    tmp = tmp + "invoiceType(전자세금계산서 종류) : " + taxinvoiceInfo.invoiceType + vbCrLf
-    tmp = tmp + "taxType(과세형태) : " + taxinvoiceInfo.taxType + vbCrLf
-    tmp = tmp + "taxTotal(세액합계) : " + taxinvoiceInfo.taxTotal + vbCrLf
-    tmp = tmp + "supplyCostTotal(공급가액 합계) : " + taxinvoiceInfo.supplyCostTotal + vbCrLf
-    tmp = tmp + "totalAmount(합계금액) : " + taxinvoiceInfo.totalAmount + vbCrLf
-    tmp = tmp + "purposeType(영수/청구) : " + taxinvoiceInfo.purposeType + vbCrLf
-    tmp = tmp + "cash(현금) : " + taxinvoiceInfo.cash + vbCrLf
-    tmp = tmp + "chkBill(수표) : " + taxinvoiceInfo.chkBill + vbCrLf
-    tmp = tmp + "credit(외상) : " + taxinvoiceInfo.credit + vbCrLf
-    tmp = tmp + "note(어음) : " + taxinvoiceInfo.note + vbCrLf
-    tmp = tmp + "remark1(비고1) : " + taxinvoiceInfo.remark1 + vbCrLf
-    tmp = tmp + "remark2(비고2) : " + taxinvoiceInfo.remark2 + vbCrLf
-    tmp = tmp + "remark3(비고3) : " + taxinvoiceInfo.remark3 + vbCrLf
-    tmp = tmp + "ntsconfirmNum(국세청 승인번호) : " + taxinvoiceInfo.ntsconfirmNum + vbCrLf + vbCrLf
+    tmp = tmp + "writeDate (작성일자) : " + taxinvoiceInfo.writeDate + vbCrLf
+    tmp = tmp + "issueDT (발행일시) : " + taxinvoiceInfo.issueDT + vbCrLf
+    tmp = tmp + "invoiceType (전자세금계산서 종류) : " + taxinvoiceInfo.invoiceType + vbCrLf
+    tmp = tmp + "taxType (과세형태) : " + taxinvoiceInfo.taxType + vbCrLf
+    tmp = tmp + "taxTotal (세액합계) : " + taxinvoiceInfo.taxTotal + vbCrLf
+    tmp = tmp + "supplyCostTotal (공급가액 합계) : " + taxinvoiceInfo.supplyCostTotal + vbCrLf
+    tmp = tmp + "totalAmount (합계금액) : " + taxinvoiceInfo.totalAmount + vbCrLf
+    tmp = tmp + "purposeType (영수/청구) : " + taxinvoiceInfo.purposeType + vbCrLf
+    tmp = tmp + "cash (현금) : " + taxinvoiceInfo.cash + vbCrLf
+    tmp = tmp + "chkBill (수표) : " + taxinvoiceInfo.chkBill + vbCrLf
+    tmp = tmp + "credit (외상) : " + taxinvoiceInfo.credit + vbCrLf
+    tmp = tmp + "note (어음) : " + taxinvoiceInfo.note + vbCrLf
+    tmp = tmp + "remark1 (비고1) : " + taxinvoiceInfo.remark1 + vbCrLf
+    tmp = tmp + "remark2 (비고2) : " + taxinvoiceInfo.remark2 + vbCrLf
+    tmp = tmp + "remark3 (비고3) : " + taxinvoiceInfo.remark3 + vbCrLf
+    tmp = tmp + "ntsconfirmNum (국세청 승인번호) : " + taxinvoiceInfo.ntsconfirmNum + vbCrLf + vbCrLf
     
     tmp = tmp + "========공급자 정보=======" + vbCrLf
-    tmp = tmp + "invoicerCorpNum(사업자번호) : " + taxinvoiceInfo.invoicerCorpNum + vbCrLf
-    tmp = tmp + "invoicerMgtKey(관리번호) : " + taxinvoiceInfo.invoicerMgtKey + vbCrLf
-    tmp = tmp + "invoicerTaxRegID(종사업장 번호) : " + taxinvoiceInfo.invoicerTaxRegID + vbCrLf
-    tmp = tmp + "invoicerCorpName(상호) : " + taxinvoiceInfo.invoicerCorpName + vbCrLf
-    tmp = tmp + "invoicerCEOName(성명) : " + taxinvoiceInfo.invoicerCEOName + vbCrLf
-    tmp = tmp + "invoicerAddr(주소) : " + taxinvoiceInfo.invoicerAddr + vbCrLf
-    tmp = tmp + "invoicerBizType(업태) : " + taxinvoiceInfo.invoicerBizType + vbCrLf
-    tmp = tmp + "invoicerBizClass(종목) : " + taxinvoiceInfo.invoicerBizClass + vbCrLf
-    tmp = tmp + "invoicerContactName(담당자 성명) : " + taxinvoiceInfo.invoicerContactName + vbCrLf
-    tmp = tmp + "invoicerTEL(담당자 연락처) : " + taxinvoiceInfo.invoicerTEL + vbCrLf
-    tmp = tmp + "invoicerEmail(담당자 이메일) : " + taxinvoiceInfo.invoicerEmail + vbCrLf + vbCrLf
+    tmp = tmp + "invoicerCorpNum (사업자번호) : " + taxinvoiceInfo.invoicerCorpNum + vbCrLf
+    tmp = tmp + "invoicerMgtKey (관리번호) : " + taxinvoiceInfo.invoicerMgtKey + vbCrLf
+    tmp = tmp + "invoicerTaxRegID (종사업장 번호) : " + taxinvoiceInfo.invoicerTaxRegID + vbCrLf
+    tmp = tmp + "invoicerCorpName (상호) : " + taxinvoiceInfo.invoicerCorpName + vbCrLf
+    tmp = tmp + "invoicerCEOName (성명) : " + taxinvoiceInfo.invoicerCEOName + vbCrLf
+    tmp = tmp + "invoicerAddr (주소) : " + taxinvoiceInfo.invoicerAddr + vbCrLf
+    tmp = tmp + "invoicerBizType (업태) : " + taxinvoiceInfo.invoicerBizType + vbCrLf
+    tmp = tmp + "invoicerBizClass (종목) : " + taxinvoiceInfo.invoicerBizClass + vbCrLf
+    tmp = tmp + "invoicerContactName (담당자 성명) : " + taxinvoiceInfo.invoicerContactName + vbCrLf
+    tmp = tmp + "invoicerTEL (담당자 연락처) : " + taxinvoiceInfo.invoicerTEL + vbCrLf
+    tmp = tmp + "invoicerEmail (담당자 이메일) : " + taxinvoiceInfo.invoicerEmail + vbCrLf + vbCrLf
     
     tmp = tmp + "========공급받는자 정보=======" + vbCrLf
-    tmp = tmp + "invoiceeCorpNum(사업자번호) : " + taxinvoiceInfo.invoiceeCorpNum + vbCrLf
-    tmp = tmp + "invoiceeType(공급받는자 구분) : " + taxinvoiceInfo.invoiceeType + vbCrLf
-    tmp = tmp + "invoiceeMgtKey(관리번호 : " + taxinvoiceInfo.invoiceeMgtKey + vbCrLf
-    tmp = tmp + "invoiceeTaxRegID(종사업장 번호) : " + taxinvoiceInfo.invoiceeTaxRegID + vbCrLf
-    tmp = tmp + "invoiceeCorpName(상호) : " + taxinvoiceInfo.invoiceeCorpName + vbCrLf
-    tmp = tmp + "invoiceeCEOName(성명) : " + taxinvoiceInfo.invoiceeCEOName + vbCrLf
-    tmp = tmp + "invoiceeAddr(주소) : " + taxinvoiceInfo.invoiceeAddr + vbCrLf
-    tmp = tmp + "invoiceeBizType(업태) : " + taxinvoiceInfo.invoiceeBizType + vbCrLf
-    tmp = tmp + "invoiceeBizClass(종목) : " + taxinvoiceInfo.invoiceeBizClass + vbCrLf
-    tmp = tmp + "invoiceeContactName1(주)담당자 성명) : " + taxinvoiceInfo.invoiceeContactName1 + vbCrLf
-    tmp = tmp + "invoiceeTEL1(주)담당자 연락처) : " + taxinvoiceInfo.invoiceeTEL1 + vbCrLf
-    tmp = tmp + "invoiceeEmail1(주)담당자 이메일) : " + taxinvoiceInfo.invoiceeEmail1 + vbCrLf
+    tmp = tmp + "invoiceeCorpNum (사업자번호) : " + taxinvoiceInfo.invoiceeCorpNum + vbCrLf
+    tmp = tmp + "invoiceeType (공급받는자 구분) : " + taxinvoiceInfo.invoiceeType + vbCrLf
+    tmp = tmp + "invoiceeMgtKey (관리번호) : " + taxinvoiceInfo.invoiceeMgtKey + vbCrLf
+    tmp = tmp + "invoiceeTaxRegID (종사업장 번호) : " + taxinvoiceInfo.invoiceeTaxRegID + vbCrLf
+    tmp = tmp + "invoiceeCorpName (상호) : " + taxinvoiceInfo.invoiceeCorpName + vbCrLf
+    tmp = tmp + "invoiceeCEOName (성명) : " + taxinvoiceInfo.invoiceeCEOName + vbCrLf
+    tmp = tmp + "invoiceeAddr (주소) : " + taxinvoiceInfo.invoiceeAddr + vbCrLf
+    tmp = tmp + "invoiceeBizType (업태) : " + taxinvoiceInfo.invoiceeBizType + vbCrLf
+    tmp = tmp + "invoiceeBizClass (종목) : " + taxinvoiceInfo.invoiceeBizClass + vbCrLf
+    tmp = tmp + "invoiceeContactName1 (주)담당자 성명) : " + taxinvoiceInfo.invoiceeContactName1 + vbCrLf
+    tmp = tmp + "invoiceeTEL1 (주)담당자 연락처) : " + taxinvoiceInfo.invoiceeTEL1 + vbCrLf
+    tmp = tmp + "invoiceeEmail1 (주)담당자 이메일) : " + taxinvoiceInfo.invoiceeEmail1 + vbCrLf
         
     tmp = tmp + "========전자(세금)계산서 품목배열========" + vbCrLf
     Dim detailInfo As PBHTTaxinvoiceDetail
     
     For Each detailInfo In taxinvoiceInfo.detailList
-        tmp = tmp + "serialNum(일련번호) : " + CStr(detailInfo.serialNum) + vbCrLf
-        tmp = tmp + "purchaseDT(거래일자) : " + detailInfo.purchaseDT + vbCrLf
-        tmp = tmp + "itemName(품목명) : " + detailInfo.itemName + vbCrLf
-        tmp = tmp + "spec(규격) : " + detailInfo.spec + vbCrLf
-        tmp = tmp + "qty(수량) : " + detailInfo.qty + vbCrLf
-        tmp = tmp + "unitCost(단가) : " + detailInfo.unitCost + vbCrLf
-        tmp = tmp + "supplyCost(공급가액) : " + detailInfo.supplyCost + vbCrLf
-        tmp = tmp + "tax(세액) : " + detailInfo.tax + vbCrLf
-        tmp = tmp + "remark(비고) : " + detailInfo.remark + vbCrLf + vbCrLf
+        tmp = tmp + "serialNum (일련번호) : " + CStr(detailInfo.serialNum) + vbCrLf
+        tmp = tmp + "purchaseDT (거래일자) : " + detailInfo.purchaseDT + vbCrLf
+        tmp = tmp + "itemName (품목명) : " + detailInfo.itemName + vbCrLf
+        tmp = tmp + "spec (규격) : " + detailInfo.spec + vbCrLf
+        tmp = tmp + "qty (수량) : " + detailInfo.qty + vbCrLf
+        tmp = tmp + "unitCost (단가) : " + detailInfo.unitCost + vbCrLf
+        tmp = tmp + "supplyCost (공급가액) : " + detailInfo.supplyCost + vbCrLf
+        tmp = tmp + "tax (세액) : " + detailInfo.tax + vbCrLf
+        tmp = tmp + "remark (비고) : " + detailInfo.remark + vbCrLf + vbCrLf
     Next
     
     MsgBox (tmp)
