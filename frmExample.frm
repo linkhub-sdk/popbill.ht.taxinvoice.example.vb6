@@ -464,8 +464,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 홈택스 전자세금계산서 매입매출 조회 API VB 6.0 SDK Example
 '
-' - VB6 SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/569/
-' - 업데이트 일자 : 2019-02-11
+' - 업데이트 일자 : 2019-09-26
 ' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -1451,5 +1450,8 @@ Private Sub Form_Load()
     
     '연동환경 설정값 True(개발용), False(상업용)
     htTaxinvoiceService.IsTest = True
+    
+    '인증토큰 IP제한기능 사용여부, True(권장)
+    htTaxinvoiceService.IPRestrictOnOff = True
 End Sub
 
