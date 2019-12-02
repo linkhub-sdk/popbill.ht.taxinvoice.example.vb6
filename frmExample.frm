@@ -900,13 +900,13 @@ Private Sub btnRequestJob_Click()
     tiType = SELL
     
     '일자유형, W-작성일자, I-발행일자, S-전송일자
-    DType = "W"
+    DType = "S"
     
     '시작일자, 표시형식(yyyyMMdd)
-    SDate = "20180601"
+    SDate = "20191101"
     
     '종료일자, 표시형식(yyyyMMdd)
-    EDate = "20190201"
+    EDate = "20191231"
     
     jobID = htTaxinvoiceService.RequestJob(txtCorpNum.Text, tiType, DType, SDate, EDate)
     
@@ -1015,6 +1015,7 @@ Private Sub btnSearch_Click()
     Dim order As String
     Dim tmp As String
     Dim listboxRow As String
+    Dim searchString As String
         
     '문서형태 배열, N-일반, M-수정
     tiType.Add "N"
@@ -1047,8 +1048,11 @@ Private Sub btnSearch_Click()
     
     '정렬 방향, D-내림차순, A-오름차순
     order = "D"
+    
+    '조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+    searchString = ""
         
-    Set SearchList = htTaxinvoiceService.Search(txtCorpNum.Text, txtJobID.Text, tiType, taxType, purposeType, taxRegIDType, taxRegID, taxRegIDYN, page, perPage, order)
+    Set SearchList = htTaxinvoiceService.Search(txtCorpNum.Text, txtJobID.Text, tiType, taxType, purposeType, taxRegIDType, taxRegID, taxRegIDYN, page, perPage, order, txtUserID.Text, searchString)
     
         
     If SearchList Is Nothing Then
@@ -1138,6 +1142,7 @@ Private Sub btnSummary_Click()
     Dim taxRegID As String
     Dim taxRegIDYN As String
     Dim tmp As String
+    Dim searchString As String
     
     '문서형태 배열, N-일반, M-수정
     tiType.Add "N"
@@ -1162,8 +1167,10 @@ Private Sub btnSummary_Click()
     '종사업장 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 조회
     taxRegIDYN = ""
         
+    '조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+    searchString = ""
     
-    Set summaryInfo = htTaxinvoiceService.Summary(txtCorpNum.Text, txtJobID.Text, tiType, taxType, purposeType, taxRegIDType, taxRegID, taxRegIDYN)
+    Set summaryInfo = htTaxinvoiceService.Summary(txtCorpNum.Text, txtJobID.Text, tiType, taxType, purposeType, taxRegIDType, taxRegID, taxRegIDYN, txtUserID.Text, searchString)
         
     If summaryInfo Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
