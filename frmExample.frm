@@ -78,7 +78,7 @@ Begin VB.Form frmExample
          TabIndex        =   47
          Top             =   360
          Width           =   2295
-         Begin VB.CommandButton btnGetContactInfo 
+         Begin VB.CommandButton bntGetContactInfo 
             Caption         =   "담당자 정보 확인"
             Height          =   375
             Left            =   120
@@ -508,17 +508,17 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'=========================================================================
+'================================== =======================================
 '
-' 팝빌 홈택스 전자세금계산서 매입매출 조회 API VB 6.0 SDK Example
+' 팝빌 홈택스 전자세금계산서 조회 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-01-17
+' - 업데이트 일자 : 2022-04-06
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
-' - VB6 SDK 적용방법 안내 : https://docs.popbill.com/httaxinvoice/tutorial/vb
+' - VB SDK 적용방법 안내 : https://docs.popbill.com/httaxinvoice/tutorial/vb
 '
 ' <테스트 연동개발 준비사항>
-' 1) 30, 33번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+' 1) 22, 25번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 '    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
 ' 2) 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 공동인증서 인증 방식이 있습니다.)
 '    - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서 [홈택스 부서사용자 등록] 혹은
@@ -530,23 +530,22 @@ Attribute VB_Exposed = False
 Option Explicit
 
 '링크아이디
-Private Const linkID = "TESTER"
+Private Const LinkID = "TESTER"
 
-'비밀키. 유출에 주의하시기 바랍니다.
+'비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
-'홈택스 전자세금계산서 연동 클래스 선언
+'홈택스 전자세금계산서 연계 클래스 선언
 Private htTaxinvoiceService As New PBHTTaxinvoiceService
 
 '=========================================================================
 ' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-' - LinkID는 인증정보로 설정되어 있는 링크아이디 값입니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#CheckIsMember
 '=========================================================================
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, linkID)
+    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, LinkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -573,23 +572,24 @@ Private Sub btnCheckID_Click()
     MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.Message)
 End Sub
 
+
 '=========================================================================
 ' 수집된 전자세금계산서 1건의 상세내역을 인쇄하는 페이지의 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetPrintURL
 '=========================================================================
 Private Sub btnGetPrintURL_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = htTaxinvoiceService.GetPrintURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
+    URL = htTaxinvoiceService.GetPrintURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -601,7 +601,7 @@ Private Sub btnJoinMember_Click()
     Dim Response As PBResponse
     
     '링크 아이디
-    joinData.linkID = linkID
+    joinData.LinkID = LinkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -621,7 +621,7 @@ Private Sub btnJoinMember_Click()
     '종목, 최대 40자
     joinData.bizClass = "종목"
     
-    '아이디, 6자이상 20자 미만
+    '아이디, 6자이상 20자 이하
     joinData.id = "userid"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
@@ -632,12 +632,6 @@ Private Sub btnJoinMember_Click()
     
     '담당자 연락처, 최대 20자
     joinData.ContactTEL = "02-999-9999"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.ContactHP = "010-1234-5678"
-    
-    '담당자 팩스번호, 최대 20자
-    joinData.ContactFAX = "02-999-9998"
     
     '담당자 메일, 최대 70자
     joinData.ContactEmail = "test@test.com"
@@ -680,17 +674,17 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetAccessURL
 '=========================================================================
 Private Sub btnGetAccessURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = htTaxinvoiceService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
+    URL = htTaxinvoiceService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -701,8 +695,8 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-    '담당자 아이디, 6자 이상 50자 미만
-    joinData.id = "vb0001_0001"
+    '담당자 아이디, 6자 이상 50자 이하
+    joinData.id = "testkorea"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
     joinData.Password = "asdf$%^123"
@@ -713,19 +707,13 @@ Private Sub btnRegistContact_Click()
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
     
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-    
-    '담당자 팩스번,최대 20자
-    joinData.fax = "070-1234-1234"
-    
     '담당자 메일주소, 최대 100자
     joinData.email = "test@test.com"
     
     '담당자 권한, 1-개인 / 2-읽기 / 3-회사
     joinData.searchRole = 3
         
-    Set Response = htTaxinvoiceService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
+    Set Response = htTaxinvoiceService.RegistContact(txtCorpNum.Text, joinData)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -739,13 +727,12 @@ End Sub
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetContactInfo
 '=========================================================================
-Private Sub btnGetContactInfo_Click()
+Private Sub bntGetContactInfo_Click()
     Dim tmp As String
     Dim info As PBContactInfo
     Dim ContactID As String
     
-    '확인할 담당자 아이디
-    ContactID = ""
+    ContactID = "testkorea"
     
     Set info = htTaxinvoiceService.GetContactInfo(txtCorpNum.Text, ContactID, txtUserID.Text)
     
@@ -754,12 +741,12 @@ Private Sub btnGetContactInfo_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
    
-    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
-        + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
+    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.tel + " | " _
+            + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
         
     MsgBox tmp
 End Sub
@@ -780,11 +767,11 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
     For Each info In resultList
-        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
+        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " _
         + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
     Next
     
@@ -807,12 +794,6 @@ Private Sub btnUpdateContact_Click()
     
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-        
-    '담당자 팩스번호, 최대 20자
-    joinData.fax = "070-1234-1234"
     
     '담당자 이메일, 최대 100자
     joinData.email = "test@test.com"
@@ -889,7 +870,6 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 잔여포인트를 확인합니다.
-' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetBalance
 '=========================================================================
 Private Sub btnGetBalance_Click()
@@ -911,17 +891,17 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetChargeURL
 '=========================================================================
 Private Sub btnGetChargeURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = htTaxinvoiceService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
+    URL = htTaxinvoiceService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -930,17 +910,17 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetPaymentURL
 '=========================================================================
 Private Sub btnGetPaymentURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = htTaxinvoiceService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
+    URL = htTaxinvoiceService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -949,22 +929,21 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetUseHistoryURL
 '=========================================================================
 Private Sub btnGetUseHistoryURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = htTaxinvoiceService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
+    URL = htTaxinvoiceService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
 ' 파트너의 잔여포인트를 확인합니다.
-' - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 통해 확인하시기 바랍니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetPartnerBalance
 '=========================================================================
 Private Sub btnGetPartnerBalance_Click()
@@ -986,21 +965,22 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetPartnerURL
 '=========================================================================
 Private Sub btnGetPartnerURL_CHRG_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = htTaxinvoiceService.GetPartnerURL(txtCorpNum.Text, "CHRG")
+    URL = htTaxinvoiceService.GetPartnerURL(txtCorpNum.Text, "CHRG")
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
-'  홈택스에 신고된 전자세금계산서 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
+' 홈택스에 신고된 전자세금계산서 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
+' - 주기적으로 자체 DB에 세금계산서 정보를 INSERT 하는 경우, 조회할 일자 유형(DType) 값을 "S"로 하는 것을 권장합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#RequestJob
 '=========================================================================
 Private Sub btnRequestJob_Click()
@@ -1035,11 +1015,11 @@ Private Sub btnRequestJob_Click()
 End Sub
 
 '=========================================================================
-' 함수 RequestJob(수집 요청)를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
-' - 거래 내역 조회(Search API) 함수 또는 거래 요약 정보 조회(Summary API) 함수전
+' 수집 요청(RequestJob API) 함수를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
+' - 수집 결과 조회(Search API) 함수 또는 수집 결과 요약 정보 조회(Summary API) 함수를 사용하기 전에
 '   수집 작업의 진행 상태, 수집 작업의 성공 여부를 확인해야 합니다.
 ' - 작업 상태(jobState) = 3(완료)이고 수집 결과 코드(errorCode) = 1(수집성공)이면
-'   거래 내역 조회(Search) 또는 거래 요약 정보 조회(Summary) 를 해야합니다.
+'   수집 결과 내역 조회(Search) 또는 수집 결과 요약 정보 조회(Summary)를 해야합니다.
 ' - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
 '   오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetJobState
@@ -1055,18 +1035,18 @@ Private Sub btnGetJobState_Click()
         Exit Sub
     End If
     
-    tmp = tmp + "jobID(작업아이디) : " + jobInfo.jobID + vbCrLf
-    tmp = tmp + "jobState(수집상태) : " + CStr(jobInfo.jobState) + vbCrLf
-    tmp = tmp + "queryType(수집유형) : " + jobInfo.queryType + vbCrLf
-    tmp = tmp + "queryDateType(일자유형) : " + jobInfo.queryDateType + vbCrLf
-    tmp = tmp + "queryStDate(시작일자) : " + jobInfo.queryStDate + vbCrLf
-    tmp = tmp + "queryEnDate(종료일자) : " + jobInfo.queryEnDate + vbCrLf
-    tmp = tmp + "errorCode(오류코드) : " + CStr(jobInfo.errorCode) + vbCrLf
-    tmp = tmp + "errorReason(오류메시지) : " + jobInfo.errorReason + vbCrLf
-    tmp = tmp + "jobStartDT(작업 시작일시) : " + jobInfo.jobStartDT + vbCrLf
-    tmp = tmp + "jobEndDT(작업 종료일시) : " + jobInfo.jobEndDT + vbCrLf
-    tmp = tmp + "collectCount(수집개수) : " + CStr(jobInfo.collectCount) + vbCrLf
-    tmp = tmp + "regDT(수집 요청일시) : " + jobInfo.regDT + vbCrLf
+    tmp = tmp + "jobID (작업아이디) : " + jobInfo.jobID + vbCrLf
+    tmp = tmp + "jobState (수집상태) : " + CStr(jobInfo.jobState) + vbCrLf
+    tmp = tmp + "queryType (수집유형) : " + jobInfo.queryType + vbCrLf
+    tmp = tmp + "queryDateType (일자유형) : " + jobInfo.queryDateType + vbCrLf
+    tmp = tmp + "queryStDate (시작일자) : " + jobInfo.queryStDate + vbCrLf
+    tmp = tmp + "queryEnDate (종료일자) : " + jobInfo.queryEnDate + vbCrLf
+    tmp = tmp + "errorCode (오류코드) : " + CStr(jobInfo.errorCode) + vbCrLf
+    tmp = tmp + "errorReason (오류메시지) : " + jobInfo.errorReason + vbCrLf
+    tmp = tmp + "jobStartDT (작업 시작일시) : " + jobInfo.jobStartDT + vbCrLf
+    tmp = tmp + "jobEndDT (작업 종료일시) : " + jobInfo.jobEndDT + vbCrLf
+    tmp = tmp + "collectCount (수집개수) : " + CStr(jobInfo.collectCount) + vbCrLf
+    tmp = tmp + "regDT (수집 요청일시) : " + jobInfo.regDT + vbCrLf
     
     MsgBox tmp
 End Sub
@@ -1116,7 +1096,7 @@ Private Sub btnListActiveJob_Click()
 End Sub
 
 '=========================================================================
-' 함수 GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역을 조회합니다.
+' 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역을 조회합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#Search
 '=========================================================================
 Private Sub btnSearch_Click()
@@ -1184,22 +1164,19 @@ Private Sub btnSearch_Click()
     tmp = tmp + "pageNum (페이지 번호) : " + CStr(SearchList.pageNum) + vbCrLf
     tmp = tmp + "pageCount (페이지 개수) : " + CStr(SearchList.pageCount) + vbCrLf + vbCrLf
     
-    taxinvoiceInfo.Clear
-        
-    taxinvoiceInfo.AddItem "ntsconfirmNum (국세청승인번호) | writeDate (작성일자) | issueDate (발행일자) | sendDate (전송일자) | taxType (과세형태) ", 0
-    taxinvoiceInfo.AddItem "purposeType (영수/청구) | supplyCostTotal (공급가액 합계) | taxTotal (세액 합계) | totalAmount (합계금액) ", 1
-    taxinvoiceInfo.AddItem "remark1 (비고) | invoiceType (매입/매출) | modifyYN (수정 전자세금계산서 여부) | orgNTSConfirmNum (원본 전자세금계산서 국세청승인번호) ", 2
-    taxinvoiceInfo.AddItem "purchaseDate (거래일자) | itemName (품명) | spec (규격) | qty (수량) | unitCost (단가) | supplyCost (공급가액) ", 3
-    taxinvoiceInfo.AddItem "tax (세액) | remark (비고) | invoicerCorpNum (공급자 사업자번호) | invoicerTaxRegID (공급자 종사업장번호) | invoicerCorpName (공급자 상호) ", 4
-    taxinvoiceInfo.AddItem "invoicerCEOName (공급자 대표자성명) | invoicerEmail (공급자 담당자 이메일) | invoiceeCorpNum (공급받는자 사업자번호) ", 5
-    taxinvoiceInfo.AddItem "invoiceeType (공급받는자 구분) | invoiceeTaxRegID (공급받는자 종사업장번호) | invoiceeCorpName (공급받는자 상호) ", 6
-    taxinvoiceInfo.AddItem "invoiceeCEOName (공급받는자 대표자 성명) | invoiceeEmail1 (공급받는자 담당자 이메일) | invoiceeEmail2 (공급받는자 ASP 연계사업자 이메일)"
-
+    listboxRow = "ntsconfirmNum (국세청승인번호) | writeDate (작성일자) | issueDate (발행일자) | sendDate (전송일자) | taxType (과세형태) | "
+    listboxRow = listboxRow + "purposeType (영수/청구) | supplyCostTotal (공급가액 합계) | taxTotal (세액 합계) | totalAmount (합계금액) | "
+    listboxRow = listboxRow + "remark1 (비고) | invoiceType (매입/매출) | modifyYN (수정 전자세금계산서 여부) | orgNTSConfirmNum (원본 전자세금계산서 국세청승인번호) | "
+    listboxRow = listboxRow + "purchaseDate (거래일자) | itemName (품명) | spec (규격) | qty (수량) | unitCost (단가) | supplyCost (공급가액) | "
+    listboxRow = listboxRow + "tax (세액) | remark (비고) | invoicerCorpNum (공급자 사업자번호) | invoicerTaxRegID (공급자 종사업장번호) | invoicerCorpName (공급자 상호) | "
+    listboxRow = listboxRow + "invoicerCEOName (공급자 대표자성명) | invoicerEmail (공급자 담당자 이메일) | invoiceeCorpNum (공급받는자 사업자번호) | "
+    listboxRow = listboxRow + "invoiceeType (공급받는자 구분) | invoiceeTaxRegID (공급받는자 종사업장번호) | invoiceeCorpName (공급받는자 상호) | "
+    listboxRow = listboxRow + "invoiceeCEOName (공급받는자 대표자 성명) | invoiceeEmail1 (공급받는자 담당자 이메일) | invoiceeEmail2 (공급받는자 ASP 연계사업자 이메일)" + vbCrLf + vbCrLf
+    
     Dim tiInfo As PBHTTaxinvoiceAbbr
            
     For Each tiInfo In SearchList.list
-        listboxRow = ""
-        listboxRow = tiInfo.ntsconfirmNum + " | "
+        listboxRow = listboxRow + tiInfo.ntsconfirmNum + " | "
         listboxRow = listboxRow + tiInfo.writeDate + " | "
         listboxRow = listboxRow + tiInfo.issueDate + " | "
         listboxRow = listboxRow + tiInfo.sendDate + " | "
@@ -1240,13 +1217,15 @@ Private Sub btnSearch_Click()
         listboxRow = listboxRow + tiInfo.invoiceeEmail2
         
         taxinvoiceInfo.AddItem listboxRow, taxinvoiceInfo.ListCount
+        
     Next
-  
+            
     MsgBox (tmp)
 End Sub
 
 '=========================================================================
-' 함수 GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
+' 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
+' - 요약 정보 : 전자세금계산서 수집 건수, 공급가액 합계, 세액 합계, 합계 금액
 ' - https://docs.popbill.com/httaxinvoice/vb/api#Summary
 '=========================================================================
 Private Sub btnSummary_Click()
@@ -1282,10 +1261,10 @@ Private Sub btnSummary_Click()
     
     '종사업장 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 조회
     taxRegIDYN = ""
-        
+    
     '조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
     SearchString = ""
-    
+        
     Set summaryInfo = htTaxinvoiceService.Summary(txtCorpNum.Text, txtJobID.Text, tiType, taxType, purposeType, taxRegIDType, taxRegID, taxRegIDYN, txtUserID.Text, SearchString)
         
     If summaryInfo Is Nothing Then
@@ -1409,17 +1388,17 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetPopUpURL
 '=========================================================================
 Private Sub btnGetPopUpURL_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
+    URL = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
 
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -1428,17 +1407,17 @@ End Sub
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetFlatRatePopUpURL
 '=========================================================================
 Private Sub btnGetFlatRatePopUpURL_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text)
+    URL = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -1471,26 +1450,25 @@ End Sub
 
 '=========================================================================
 ' 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
-' - 인증방식에는 부서사용자/공동인증서 인증 방식이 있습니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetCertificatePopUpURL
 '=========================================================================
 Private Sub btnGetCertificatePopUpURL_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text)
+    URL = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
-' 홈택스연동 인증을 위해 팝빌에 등록된 인증서 만료일자를 확인합니다.
+' 팝빌에 등록된 인증서 만료일자를 확인합니다.
 ' - https://docs.popbill.com/httaxinvoice/vb/api#GetCertificateExpireDate
 '=========================================================================
 Private Sub btnGetCertificateExpireDate_Click()
@@ -1602,7 +1580,7 @@ End Sub
 Private Sub Form_Load()
 
     '모듈 초기화
-    htTaxinvoiceService.Initialize linkID, SecretKey
+    htTaxinvoiceService.Initialize LinkID, SecretKey
     
     '연동환경설정값, True-개발용 False-상업용
     htTaxinvoiceService.IsTest = True
@@ -1612,6 +1590,9 @@ Private Sub Form_Load()
     
     '로컬시스템 시간 사용여부 True-사용, False-미사용, 기본값(False)
     htTaxinvoiceService.UseLocalTimeYN = False
-    
 End Sub
+
+
+
+
 
