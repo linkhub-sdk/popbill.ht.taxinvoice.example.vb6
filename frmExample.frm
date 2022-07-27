@@ -512,7 +512,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 홈택스 전자세금계산서 조회 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-04-06
+' - 업데이트 일자 : 2022-07-26
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
 ' - VB SDK 적용방법 안내 : https://docs.popbill.com/httaxinvoice/tutorial/vb
@@ -530,7 +530,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 '링크아이디
-Private Const LinkID = "TESTER"
+Private Const linkID = "TESTER"
 
 '비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
@@ -545,7 +545,7 @@ Private htTaxinvoiceService As New PBHTTaxinvoiceService
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, LinkID)
+    Set Response = htTaxinvoiceService.CheckIsMember(txtCorpNum.Text, linkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -581,7 +581,7 @@ End Sub
 Private Sub btnGetPrintURL_Click()
     Dim URL As String
     
-    URL = htTaxinvoiceService.GetPrintURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
+    URL = htTaxinvoiceService.GetPrintURL(txtCorpNum.Text, txtNtsconfirmNum.Text, txtUserID.Text)
     
     If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -601,7 +601,7 @@ Private Sub btnJoinMember_Click()
     Dim Response As PBResponse
     
     '링크 아이디
-    joinData.LinkID = LinkID
+    joinData.linkID = linkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -734,7 +734,7 @@ Private Sub bntGetContactInfo_Click()
     
     ContactID = "testkorea"
     
-    Set info = htTaxinvoiceService.GetContactInfo(txtCorpNum.Text, ContactID, txtUserID.Text)
+    Set info = htTaxinvoiceService.GetContactInfo(txtCorpNum.Text, ContactID)
     
     If info Is Nothing Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1390,7 +1390,7 @@ End Sub
 Private Sub btnGetPopUpURL_Click()
     Dim URL As String
     
-    URL = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text)
+    URL = htTaxinvoiceService.GetPopUpURL(txtCorpNum.Text, txtNtsconfirmNum.Text, txtUserID.Text)
     
     If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1409,7 +1409,7 @@ End Sub
 Private Sub btnGetFlatRatePopUpURL_Click()
     Dim URL As String
     
-    URL = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text)
+    URL = htTaxinvoiceService.GetFlatRatePopUpURL(txtCorpNum.Text, txtUserID.Text)
     
     If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1456,7 +1456,7 @@ End Sub
 Private Sub btnGetCertificatePopUpURL_Click()
     Dim URL As String
     
-    URL = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text)
+    URL = htTaxinvoiceService.GetCertificatePopUpURL(txtCorpNum.Text, txtUserID.Text)
     
     If URL = "" Then
         MsgBox ("응답코드 : " + CStr(htTaxinvoiceService.LastErrCode) + vbCrLf + "응답메시지 : " + htTaxinvoiceService.LastErrMessage)
@@ -1580,7 +1580,7 @@ End Sub
 Private Sub Form_Load()
 
     '모듈 초기화
-    htTaxinvoiceService.Initialize LinkID, SecretKey
+    htTaxinvoiceService.Initialize linkID, SecretKey
     
     '연동환경설정값, True-개발용 False-상업용
     htTaxinvoiceService.IsTest = True
